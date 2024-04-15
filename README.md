@@ -1,9 +1,9 @@
 # Gambit
 
-Simulate odds-based mechanics such as dice rolls, card draws, and slot machines.
+Simulate and test odds-based mechanics such as dice rolls and more.
 
-[![Github Actions](https://github.com/matanlurey/gambit/actions/workflows/check.yaml/badge.svg)](https://github.com/matanlurey/gambit/actions/workflows/check.yaml)
-[![Coverage Status](https://coveralls.io/repos/github/matanlurey/gambit/badge.svg?branch=main)](https://coveralls.io/github/matanlurey/gambit?branch=main)
+[![Github Actions](https://github.com/matanlurey/gambit.dart/actions/workflows/check.yaml/badge.svg)](https://github.com/matanlurey/gambit.dart/actions/workflows/check.yaml)
+[![Coverage Status](https://coveralls.io/repos/github/matanlurey/gambit.dart/badge.svg?branch=main)](https://coveralls.io/github/matanlurey/gambit.dart?branch=main)
 
 ## Usage
 
@@ -20,8 +20,8 @@ import 'package:gambit/gambit.dart';
 
 Gambit is a tiny, focused package. Within that scope, we're happy to accept
 contributions. If you have a feature you'd like to see, feel free to
-[file an issue](https://github.com/matanlurey/gambit/issues/new) or
-[fork and open a pull request](https://github.com/matanlurey/gambit/fork).
+[file an issue](https://github.com/matanlurey/gambit.dart/issues/new) or
+[fork and open a pull request](https://github.com/matanlurey/gambit.dart/fork).
 
 ### CI
 
