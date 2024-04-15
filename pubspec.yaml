@@ -1,0 +1,18 @@
+# https://dart.dev/tools/pub/pubspec
+
+name: gambit
+version: 0.1.0
+description: Simulate and test odds-based mechanics such as dice rolls and more.
+repository: https://github.com/matanlurey/gambit.dart
+
+environment:
+  sdk: ^3.3.0
+
+dependencies:
+  meta: ^1.14.0
+
+dev_dependencies:
+  checks: ^0.3.0
+  coverage: ^1.7.2
+  oath: ^0.1.0
+  test: ^1.25.3
