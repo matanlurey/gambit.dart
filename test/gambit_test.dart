@@ -8,6 +8,11 @@ void main() {
       check(() => FixedRandom.never().nextDouble()).throws<StateError>();
     });
 
+    test('requires non-emtpy values', () {
+      check(() => FixedRandom.terminal([])).throws<ArgumentError>();
+      check(() => FixedRandom.repeat([])).throws<ArgumentError>();
+    });
+
     test('terminal uses pre-defined values, then throws', () {
       final random = FixedRandom.terminal([0.5, 0.75]);
       check(random.nextDouble()).equals(0.5);
@@ -20,6 +25,19 @@ void main() {
       check(random.nextDouble()).equals(0.5);
       check(random.nextDouble()).equals(0.75);
       check(random.nextDouble()).equals(0.5);
+    });
+
+    test('also works with integers and booleans', () {
+      final random = FixedRandom.normal(4);
+      check(random.nextInt(4)).equals(0);
+      check(random.nextInt(4)).equals(1);
+      check(random.nextInt(4)).equals(2);
+      check(random.nextInt(4)).equals(3);
+
+      check(random.nextBool()).isTrue();
+      check(random.nextBool()).isTrue();
+      check(random.nextBool()).isFalse();
+      check(random.nextBool()).isFalse();
     });
 
     test('normal uses a normal distribution', () {
@@ -133,5 +151,38 @@ void main() {
       final string = random.nextString(alphanumeric, 10);
       check(string).has(pattern.hasMatch, 'pattern').isTrue();
     }
+  });
+
+  group('Dice', () {
+    test('use an existing dice', () {
+      final random = FixedRandom.normal(3);
+      check(d6.sample(random).toString()).equals('1');
+      check(d6.sample(random).toString(verbose: true)).equals('3 (1d6)');
+    });
+
+    test('create a custom dice', () {
+      final random = FixedRandom.normal(3);
+      final $3d7 = Dice(7) * 3;
+      check('${$3d7}').equals('3d7');
+      check($3d7).equals(MultipleDice(3, Dice(7)));
+      check($3d7)
+          .has((d) => d.hashCode, 'hashCode')
+          .equals(MultipleDice(3, Dice(7)).hashCode);
+      check($3d7.sample(random).toString()).equals('9');
+      check($3d7.sample(random).toString(verbose: true)).equals('9 (3d7)');
+    });
+
+    test('dice pools must be at least 1', () {
+      check(() => Dice(6) * 0).throws<ArgumentError>();
+    });
+
+    test('require dice to have at least 1 side', () {
+      check(() => Dice(0)).throws<ArgumentError>();
+    });
+
+    test('dice implement == and hashCode', () {
+      check(d6).equals(Dice(6));
+      check(d6).has((d) => d.hashCode, 'hashCode').equals(Dice(6).hashCode);
+    });
   });
 }

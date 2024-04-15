@@ -347,13 +347,6 @@ final class _WeightedIndexDistribution extends Distribution<int> {
       );
     }
     final normalized = List.of(weights.map((e) => e / total));
-    if (normalized.isEmpty) {
-      throw ArgumentError.value(
-        weights,
-        'weights',
-        'Cannot be empty.',
-      );
-    }
     return _WeightedIndexDistribution._(normalized);
   }
 
@@ -365,7 +358,7 @@ final class _WeightedIndexDistribution extends Distribution<int> {
   int sample(Random random) {
     final value = random.nextDouble();
     var sum = 0.0;
-    for (var i = 0; i < _weights.length; i++) {
+    for (var i = 0; i < _weights.length - 1; i++) {
       sum += _weights[i];
       if (value < sum) {
         return i;

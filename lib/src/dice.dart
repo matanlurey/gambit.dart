@@ -139,6 +139,16 @@ final class SingleDiceResult extends DiceResult {
 }
 
 /// Pool of multiple dice.
+///
+/// ## Equality
+///
+/// Two pools of multiple dice are equal if they have the same number of dice
+/// and the same dice:
+///
+/// ```dart
+/// print(MultipleDice(3, Dice(6)) == MultipleDice(3, Dice(6))); // true
+/// print(MultipleDice(3, Dice(6)) == MultipleDice(3, Dice(20))); // false
+/// ```
 @immutable
 final class MultipleDice extends Distribution<MultipleDiceResult> {
   /// Creates a pool of [count] dice with [sides] number of faces.
@@ -167,6 +177,17 @@ final class MultipleDice extends Distribution<MultipleDiceResult> {
       List.generate(count, (_) => dice.sample(random).value),
     );
   }
+
+  @override
+  bool operator ==(Object other) {
+    return other is MultipleDice && count == other.count && dice == other.dice;
+  }
+
+  @override
+  int get hashCode => Object.hash(count, dice);
+
+  @override
+  String toString() => '$count$dice';
 }
 
 /// Result of a pool of multiple dice.
