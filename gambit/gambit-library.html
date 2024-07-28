@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="gambit library API docs, for the Dart programming language.">
+  <title>gambit library - Dart API</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../static-assets/github.css?v1">
+  <link rel="stylesheet" href="../static-assets/styles.css?v1">
+  <link rel="icon" href="../static-assets/favicon.png?v1">
+
+  
+</head>
+
+
+<body data-base-href="../" data-using-base-href="false" class="light-theme">
+
+<div id="overlay-under-drawer"></div>
+
+<header id="title">
+  <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="../index.html">gambit</a></li>
+    <li class="self-crumb">gambit.dart</li>
+  </ol>
+  <div class="self-name">gambit</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+  <div class="toggle" id="theme-button" title="Toggle brightness">
+    <label for="theme">
+      <input type="checkbox" id="theme" value="light-theme">
+      <span id="dark-theme-button" class="material-symbols-outlined">
+        dark_mode
+      </span>
+      <span id="light-theme-button" class="material-symbols-outlined">
+        light_mode
+      </span>
+    </label>
+  </div>
+</header>
+<main>
+
+<div
+    id="dartdoc-main-content"
+    class="main-content"
+    data-above-sidebar=""
+    data-below-sidebar="gambit&#47;gambit-library-sidebar.html">
+  
+    <div>
+      
+
+      <h1>
+        <span class="kind-library">gambit</span>
+        library 
+ 
+
+      </h1>
+    </div>
+
+    
+<section class="desc markdown">
+  <p>Simulate and test odds-based mechanics such as dice rolls and more.</p>
+<p>Gambit provides two main-types: <a href="../gambit/Distribution-class.html">Distribution</a> and <a href="../gambit/FixedRandom-class.html">FixedRandom</a>.</p>
+<h2 id="distributions">Distributions</h2>
+<p>A <em>distriction</em>, or <code>Distribution&lt;T&gt;</code>, is a type that can be used to create
+a random instance of <code>T</code>, given an instance of <a href="https://api.dart.dev/stable/3.4.4/dart-math/Random-class.html">Random</a>. The main property
+of distributions are that they are:</p>
+<ul>
+<li>Immutable (once created, the distribution does not change)</li>
+<li>Deterministic (given a fixed random instance)</li>
+<li>A standard interface</li>
+</ul>
+<p>For example, a <a href="../gambit/Dice-class.html">Dice</a> is a <code>Distribution&lt;SingleDiceResult&gt;</code>. Here is a <a href="../gambit/d6-constant.html">d6</a>:</p>
+<pre class="language-dart"><code class="language-dart">import 'package:gambit/gambit.dart';
+
+void main() {
+  // Gambit re-exports the 'Random' class from 'dart:math'.
+  final random = Random();
+
+  // A six-sided die.
+  print(d6.sample(random)); // 1-6.
+}
+</code></pre>
+<p>Or, the <a href="../gambit/alphanumeric.html">alphanumeric</a> distribution, which returns a random alphanumeric
+string:</p>
+<pre class="language-dart"><code class="language-dart">import 'package:gambit/gambit.dart';
+
+void main() {
+  final random = Random();
+
+  // Random alphanumeric string of 10 characters.
+  print(random.nextString(alphanumeric, 10));
+}
+</code></pre>
+<p>Additional built-in distributions include <em>weighted distributions</em>:</p>
+<pre class="language-dart"><code class="language-dart">import 'package:gambit/gambit.dart';
+
+void main() {
+  final random = Random();
+
+  // 50% chance of 'a', 25% chance of 'b', 25% chance of 'c'.
+  final choices = ['a', 'b', 'c'];
+  final weights = Distribution.indexWeights([2, 1, 1]);
+  for (var i = 0; i &lt; 100; i++) {
+    print(weights.sample(random));
+  }
+}
+</code></pre>
+<h2 id="testable-rngs">Testable RNGs</h2>
+<p>The <a href="../gambit/FixedRandom-class.html">FixedRandom</a> class provides a way to create deterministic random
+instances. This is useful for testing code that uses random values.</p>
+<pre class="language-dart"><code class="language-dart">import 'package:gambit/gambit.dart';
+
+void main() {
+  final random = FixedRandom.normal(3);
+}
+</code></pre>
+</section>
+
+
+    <section class="summary offset-anchor" id="classes">
+      <h2>Classes</h2>
+
+      <dl>
+          <dt id="Dice">
+  <span class="name "><a href="../gambit/Dice-class.html">Dice</a></span> 
+
+</dt>
+<dd>
+  A single die with a fixed number of <a href="../gambit/Dice/sides.html">sides</a>.
+</dd>
+
+          <dt id="DiceResult">
+  <span class="name "><a href="../gambit/DiceResult-class.html">DiceResult</a></span> 
+
+</dt>
+<dd>
+  Result of a dice roll.
+</dd>
+
+          <dt id="Distribution">
+  <span class="name "><a href="../gambit/Distribution-class.html">Distribution</a><span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></span> 
+
+</dt>
+<dd>
+  Types that can be used to create a random instance of <code>T</code>.
+</dd>
+
+          <dt id="FixedRandom">
+  <span class="name "><a href="../gambit/FixedRandom-class.html">FixedRandom</a></span> 
+
+</dt>
+<dd>
+  An alternative to <a href="https://api.dart.dev/stable/3.4.4/dart-math/Random-class.html">Random</a> that allows for deterministic testing.
+</dd>
+
+          <dt id="MultipleDice">
+  <span class="name "><a href="../gambit/MultipleDice-class.html">MultipleDice</a></span> 
+
+</dt>
+<dd>
+  Pool of multiple dice.
+</dd>
+
+          <dt id="MultipleDiceResult">
+  <span class="name "><a href="../gambit/MultipleDiceResult-class.html">MultipleDiceResult</a></span> 
+
+</dt>
+<dd>
+  Result of a pool of multiple dice.
+</dd>
+
+          <dt id="Random">
+  <span class="name "><a href="https://api.dart.dev/stable/3.4.4/dart-math/Random-class.html">Random</a></span> 
+
+</dt>
+<dd>
+  A generator of random bool, int, or double values.
+</dd>
+
+          <dt id="SingleDiceResult">
+  <span class="name "><a href="../gambit/SingleDiceResult-class.html">SingleDiceResult</a></span> 
+
+</dt>
+<dd>
+  Result of a single dice roll.
+</dd>
+
+      </dl>
+    </section>
+
+
+
+
+    <section class="summary offset-anchor" id="extensions">
+      <h2>Extensions</h2>
+
+      <dl>
+          <dt id="RandomExtension">
+  <span class="name "><a href="../gambit/RandomExtension.html">RandomExtension</a></span>
+  on <a href="https://api.dart.dev/stable/3.4.4/dart-math/Random-class.html">Random</a>
+  
+
+</dt>
+<dd>
+  Utilities for random number generation.
+</dd>
+
+
+      </dl>
+    </section>
+
+    <section class="summary offset-anchor" id="constants">
+      <h2>Constants</h2>
+
+      <dl class="properties">
+          <dt id="d10" class="constant">
+    <span class="name "><a href="../gambit/d10-constant.html">d10</a></span>
+  <span class="signature">&#8594; const <a href="../gambit/Dice-class.html">Dice</a></span>
+  
+
+</dt>
+<dd>
+  A 10-sided die.
+  
+
+</dd>
+
+          <dt id="d100" class="constant">
+    <span class="name "><a href="../gambit/d100-constant.html">d100</a></span>
+  <span class="signature">&#8594; const <a href="../gambit/Dice-class.html">Dice</a></span>
+  
+
+</dt>
+<dd>
+  A 100-sided die.
+  
+
+</dd>
+
+          <dt id="d12" class="constant">
+    <span class="name "><a href="../gambit/d12-constant.html">d12</a></span>
+  <span class="signature">&#8594; const <a href="../gambit/Dice-class.html">Dice</a></span>
+  
+
+</dt>
+<dd>
+  A 12-sided die.
+  
+
+</dd>
+
+          <dt id="d20" class="constant">
+    <span class="name "><a href="../gambit/d20-constant.html">d20</a></span>
+  <span class="signature">&#8594; const <a href="../gambit/Dice-class.html">Dice</a></span>
+  
+
+</dt>
+<dd>
+  A 20-sided die.
+  
+
+</dd>
+
+          <dt id="d4" class="constant">
+    <span class="name "><a href="../gambit/d4-constant.html">d4</a></span>
+  <span class="signature">&#8594; const <a href="../gambit/Dice-class.html">Dice</a></span>
+  
+
+</dt>
+<dd>
+  A 4-sided die.
+  
+
+</dd>
+
+          <dt id="d6" class="constant">
+    <span class="name "><a href="../gambit/d6-constant.html">d6</a></span>
+  <span class="signature">&#8594; const <a href="../gambit/Dice-class.html">Dice</a></span>
+  
+
+</dt>
+<dd>
+  A 6-sided die.
+  
+
+</dd>
+
+          <dt id="d8" class="constant">
+    <span class="name "><a href="../gambit/d8-constant.html">d8</a></span>
+  <span class="signature">&#8594; const <a href="../gambit/Dice-class.html">Dice</a></span>
+  
+
+</dt>
+<dd>
+  An 8-sided die.
+  
+
+</dd>
+
+      </dl>
+    </section>
+
+    <section class="summary offset-anchor" id="properties">
+      <h2>Properties</h2>
+
+      <dl class="properties">
+          <dt id="alphanumeric" class="property">
+  <span class="name"><a href="../gambit/alphanumeric.html">alphanumeric</a></span>
+  <span class="signature">&#8594; <a href="../gambit/Distribution-class.html">Distribution</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.4.4/dart-core/int-class.html">int</a></span>&gt;</span></span>
+  
+
+</dt>
+<dd>
+  Samples a random alphanumeric character (<code>a-z</code>, <code>A-Z</code>, <code>0-9</code>).
+  <div class="features"><span class="feature">final</span></div>
+
+</dd>
+
+      </dl>
+    </section>
+
+
+
+
+  </div> <!-- /.main-content -->
+
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
+<header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+    <li><a href="../index.html">gambit</a></li>
+    <li class="self-crumb">gambit.dart</li>
+</ol>
+
+
+    <h5><span class="package-name">gambit</span> <span class="package-kind">package</span></h5>
+    <ol>
+      <li class="section-title">Libraries</li>
+      <li><a href="../gambit/gambit-library.html">gambit</a></li>
+</ol>
+
+  </div>
+
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+    <h5>gambit library</h5>
+  </div><!--/sidebar-offcanvas-right-->
+
+</main>
+
+<footer>
+  <span class="no-break">
+    gambit
+      0.2.0-alpha
+  </span>
+
+  
+</footer>
+
+
+
+<script src="../static-assets/highlight.pack.js?v1"></script>
+<script src="../static-assets/docs.dart.js"></script>
+
+
+
+</body>
+
+</html>
+
