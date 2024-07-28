@@ -84,9 +84,9 @@ void main() {
       final random = FixedRandom.normal(3);
       final distribution = Distribution.fromString('abc');
       final results = [
-        distribution(random),
-        distribution(random),
-        distribution(random),
+        distribution.sample(random),
+        distribution.sample(random),
+        distribution.sample(random),
       ].map(String.fromCharCode).toList();
 
       check(results).deepEquals(['a', 'b', 'c']);

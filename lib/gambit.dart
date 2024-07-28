@@ -1,8 +1,83 @@
-import 'dart:math';
+/// Simulate and test odds-based mechanics such as dice rolls and more.
+///
+/// Gambit provides two main-types: [Distribution] and [FixedRandom].
+///
+/// ## Distributions
+///
+/// A _distriction_, or `Distribution<T>`, is a type that can be used to create
+/// a random instance of `T`, given an instance of [Random]. The main property
+/// of distributions are that they are:
+///
+/// - Immutable (once created, the distribution does not change)
+/// - Deterministic (given a fixed random instance)
+/// - A standard interface
+///
+/// For example, a [Dice] is a `Distribution<SingleDiceResult>`. Here is a [d6]:
+///
+/// ```dart
+/// import 'package:gambit/gambit.dart';
+///
+/// void main() {
+///   // Gambit re-exports the 'Random' class from 'dart:math'.
+///   final random = Random();
+///
+///   // A six-sided die.
+///   print(d6.sample(random)); // 1-6.
+/// }
+/// ```
+///
+/// Or, the [alphanumeric] distribution, which returns a random alphanumeric
+/// string:
+///
+/// ```dart
+/// import 'package:gambit/gambit.dart';
+///
+/// void main() {
+///   final random = Random();
+///
+///   // Random alphanumeric string of 10 characters.
+///   print(random.nextString(alphanumeric, 10));
+/// }
+/// ```
+///
+/// Additional built-in distributions include _weighted distributions_:
+///
+/// ```dart
+/// import 'package:gambit/gambit.dart';
+///
+/// void main() {
+///   final random = Random();
+///
+///   // 50% chance of 'a', 25% chance of 'b', 25% chance of 'c'.
+///   final choices = ['a', 'b', 'c'];
+///   final weights = Distribution.indexWeights([2, 1, 1]);
+///   for (var i = 0; i < 100; i++) {
+///     print(weights.sample(random));
+///   }
+/// }
+/// ```
+///
+/// ## Testable RNGs
+///
+/// The [FixedRandom] class provides a way to create deterministic random
+/// instances. This is useful for testing code that uses random values.
+///
+/// ```dart
+/// import 'package:gambit/gambit.dart';
+///
+/// void main() {
+///   final random = FixedRandom.normal(3);
+/// }
+/// ```
+library;
+
 import 'dart:typed_data';
 
+// TODO: Use @docImport instead.
+import 'package:gambit/gambit.dart';
 import 'package:meta/meta.dart';
 
+export 'dart:math' show Random;
 export 'src/dice.dart';
 
 /// An alternative to [Random] that allows for deterministic testing.
@@ -167,7 +242,7 @@ extension RandomExtension on Random {
   /// final random = Random();
   /// print(random.next(alphanumeric));
   /// ```
-  T next<T>(Distribution<T> distribution) => distribution(this);
+  T next<T>(Distribution<T> distribution) => distribution.sample(this);
 
   /// Returns a random string of [length] using the given [distribution].
   ///
@@ -187,7 +262,7 @@ extension RandomExtension on Random {
 
     final bytes = Uint8List(length);
     for (var i = 0; i < length; i++) {
-      bytes[i] = distribution(this);
+      bytes[i] = distribution.sample(this);
     }
     return String.fromCharCodes(bytes);
   }
@@ -281,12 +356,6 @@ abstract class Distribution<T> {
 
   /// Returns a random instance of [T] using the given [random].
   T sample(Random random);
-}
-
-/// Implements the `call` operator for [Distribution].
-extension DistributionExtension<T> on Distribution<T> {
-  /// Identical to calling `distribution.sample(random)`.
-  T call(Random random) => sample(random);
 }
 
 final class _ConstantDistribution<T> extends Distribution<T> {

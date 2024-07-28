@@ -1,4 +1,11 @@
-# 0.1.0
+# Changelog
+
+## 0.2.0-alpha
+
+- Added additional documentation and upgraded dependencies.
+- Removed `DistributionExtension`, which only provided a `call` method.
+
+## 0.1.0
 
 - Initial release:
 

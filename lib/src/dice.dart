@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:gambit/gambit.dart';
 import 'package:meta/meta.dart';
 
@@ -151,7 +149,7 @@ final class SingleDiceResult extends DiceResult {
 /// ```
 @immutable
 final class MultipleDice extends Distribution<MultipleDiceResult> {
-  /// Creates a pool of [count] dice with [sides] number of faces.
+  /// Creates a pool of [count] dice with [dice] number of faces.
   MultipleDice(this.count, this.dice) {
     if (count < 1) {
       throw ArgumentError.value(
